@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SykartPostgres</title>
+  <title>Sykart Data</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Sykart Data</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <!-- <li><a href="/races/latest">Latest race</a></li>
+          <li><a href="/hours">When is busy?</a></li>
+          <li><a href="/competetive">When do drivers get the best times?</a></li>
+          <li><a href="/karts">Which karts are best?</a></li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  <div class="container">
+    <%= yield %>
+  </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(".nav li a[href='"+window.location.pathname+"']").parent().toggleClass("active");
+    });
+  </script>
+  
 </body>
 </html>
