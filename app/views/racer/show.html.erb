@@ -1,0 +1,11 @@
+<h1><%= @racer.nickname %></h1>
+    <% @races_by_kart_type.each do |type, races| %>
+        <h2>Kart type: <%= type %></h2>
+
+        <ul>
+            <% races.each do |race| %>
+                <li><%= race.kart_type %> <%= sprintf("%2.3f", race.best_time) %> <%= race.race_start %></li>
+            <% end %>
+        </ul>
+    <% end %>
+</ul>
