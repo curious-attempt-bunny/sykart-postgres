@@ -32,7 +32,7 @@ races.each do |race|
     race = JSON.parse(race_response)['race']
     # puts JSON.pretty_generate(race)
 
-    race_start = DateTime.parse(race["starts_at"])
+    race_start = Time.zone.parse(race["starts_at"])
     puts race_start
 
     ActiveRecord::Base.transaction do
