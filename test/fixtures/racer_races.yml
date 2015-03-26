@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  race_id: 1
+  nickname: MyString
+  best_time: 
+  best_time: 
+  kart_number: 1
+
+two:
+  race_id: 1
+  nickname: MyString
+  best_time: 
+  best_time: 
+  kart_number: 1
