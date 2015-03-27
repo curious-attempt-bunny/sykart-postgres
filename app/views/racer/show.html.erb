@@ -9,6 +9,18 @@
                     <td><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></td>
                 </tr>
             <% end %>
-        </table>    
+        </table>
+
+        <table class="table table-striped">
+            <% races.sort_by(&:race_start).reverse.each do |race| %>
+                <tr title="hi!">
+                    <td><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></td>
+                    <td><%= sprintf("%2.3f", race.best_time) %></td>
+                    <td><%= sprintf("%2.3f", race.average_time) %></td>
+                    <td><%= sprintf("%2.3f", race.average_time-race.best_time) %></td>
+                    <td><div style="display:inline-block;float:left;height:1em;width:<%= (race.best_time - 27)*100 %>px;background-color:#00f;">&nbsp;</div><div style="display:inline-block;height:1em;width:<%= (race.average_time - race.best_time)*100 %>px;background-color:#0f0;">&nbsp;</div></td>
+                </tr>
+            <% end %>
+        </table>
     <% end %>
 </ul>

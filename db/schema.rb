@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326015055) do
+ActiveRecord::Schema.define(version: 20150326035033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,13 @@ ActiveRecord::Schema.define(version: 20150326015055) do
     t.integer  "racer_id"
     t.integer  "race_id"
     t.datetime "race_start"
-    t.string   "nickname",    limit: 40
-    t.decimal  "best_time",              precision: 6, scale: 3
+    t.string   "nickname",     limit: 40
+    t.decimal  "best_time",               precision: 6,  scale: 3
     t.integer  "kart_number"
     t.string   "kart_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "average_time",            precision: 10, scale: 3
   end
 
   add_index "racer_races", ["race_id"], name: "index_racer_races_on_race_id", using: :btree

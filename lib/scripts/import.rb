@@ -53,16 +53,22 @@ races.each do |race|
                 end
                 nickname = racer["nickname"]
 
+                total_time = 0
+                laps = 0
                 best_time = nil
                 (racer["laps"] || []).each do |lap|
                     lap_time = lap["lap_time"]
                     next if lap_time <= 0
                     best_time = lap_time if best_time.nil? || best_time > lap_time
+                    # puts "lap_time: #{lap_time}"
+                    total_time += lap_time
+                    laps += 1
                 end
 
                 if best_time
-                    puts "racer_id: #{racer_id}, race_id: #{race_id} best_time: #{best_time}"
-                    RacerRace.create!(racer_id: racer_id, race_id: race_id, race_start: race_start, nickname: nickname, best_time: best_time, kart_number: kart_number, kart_type: kart_type)
+                    average_time = (total_time / laps).round(3)
+                    puts "racer_id: #{racer_id}, race_id: #{race_id} best_time: #{best_time} average_time: #{average_time}"
+                    RacerRace.create!(racer_id: racer_id, race_id: race_id, race_start: race_start, nickname: nickname, best_time: best_time, average_time: average_time, kart_number: kart_number, kart_type: kart_type)
                 end
             end
         rescue InvalidRacerId
