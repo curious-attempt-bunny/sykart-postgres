@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Race
     def self.unimported
         next_date = "2015-01-01"
@@ -13,5 +15,31 @@ class Race
         race_ids.reject do |race_id|
             RacerRace.where(race_id: race_id).exists?
         end
+    end
+
+    def self.load(race_id)
+        race_url = URI("http://sirtigard.clubspeedtiming.com/api/index.php/races/#{race_id}.json?key=cs-dev")
+        race_response = Net::HTTP.get(race_url)
+        race = JSON.parse(race_response)['race']
+    
+        race["starts_at"] = Time.zone.parse(race["starts_at"])
+
+        race["racers"].each do |racer|
+            racer["id"] = racer["id"].to_i
+            racer["kart_number"] = racer["kart_number"].to_i
+            racer["kart_type"] = if racer["kart_number"] >= 40 
+                    "slow"
+                elsif racer["kart_number"] >= 20
+                    "fast"
+                else
+                    "normal"
+                end
+            racer["laps"] = racer["laps"] || []
+            racer["laps"].reject! { |lap| lap["lap_time"] <= 0 }
+        end
+
+        race["racers"].reject! { |racer| racer["laps"].empty? }
+
+        race
     end
 end
