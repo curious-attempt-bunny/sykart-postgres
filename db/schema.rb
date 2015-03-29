@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326035033) do
+ActiveRecord::Schema.define(version: 20150329172654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150326035033) do
     t.integer  "race_id"
     t.datetime "race_start"
     t.string   "nickname",     limit: 40
-    t.decimal  "best_time",               precision: 6,  scale: 3
+    t.decimal  "best_time",               precision: 10, scale: 3
     t.integer  "kart_number"
     t.string   "kart_type"
     t.datetime "created_at"
