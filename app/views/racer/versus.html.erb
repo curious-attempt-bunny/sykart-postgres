@@ -1,0 +1,52 @@
+<h1><%= @racer1.nickname %> vs <%= @racer2.nickname %></h1>
+
+<h2>Best times</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th><%= @racer1.nickname %></th>
+            <th><%= @racer2.nickname %></th>
+            <th>Gap</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @races.keys.sort_by { |race_id| @races[race_id].first.race_start }.reverse.each do |race_id| %>
+            <% racer1, racer2 = @races[race_id] %>
+            <% racer1, racer2 = [racer2, racer1] if @racer1.racer_id == racer2.racer_id %>
+            <tr>
+                <td><%= racer1.race_start.strftime("%l:%M%P %a %b #{racer1.race_start.day.ordinalize} %Y") %></td>
+                <td class="<%= "best_#{racer1.kart_type}" if racer1.best_time <= racer2.best_time %>"><%= sprintf("%2.3f", racer1.best_time) %></td>
+                <td class="<%= "best_#{racer2.kart_type}" if racer2.best_time <= racer1.best_time %>"><%= sprintf("%2.3f", racer2.best_time) %></td>
+                <td><%= sprintf("%2.3f", (racer1.best_time-racer2.best_time).abs) %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<h2>Average times</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th><%= @racer1.nickname %></th>
+            <th><%= @racer2.nickname %></th>
+            <th>Gap</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @races.keys.sort_by { |race_id| @races[race_id].first.race_start }.reverse.each do |race_id| %>
+            <% racer1, racer2 = @races[race_id] %>
+            <% racer1, racer2 = [racer2, racer1] if @racer1.racer_id == racer2.racer_id %>
+            <tr>
+                <td><%= racer1.race_start.strftime("%l:%M%P %a %b #{racer1.race_start.day.ordinalize} %Y") %></td>
+                <td class="<%= "best_#{racer1.kart_type}" if racer1.average_time <= racer2.average_time %>"><%= sprintf("%2.3f", racer1.average_time) %></td>
+                <td class="<%= "best_#{racer2.kart_type}" if racer2.average_time <= racer1.average_time %>"><%= sprintf("%2.3f", racer2.average_time) %></td>
+                <td><%= sprintf("%2.3f", (racer1.average_time-racer2.average_time).abs) %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
