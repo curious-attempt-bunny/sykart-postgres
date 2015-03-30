@@ -18,7 +18,7 @@ Race.unimported.each do |race_id|
 
                 if best_time
                     average_time = (total_time / laps).round(3)
-                    puts "racer_id: #{racer['id']}, race_id: #{race_id} best_time: #{best_time} average_time: #{average_time}"
+                    puts "starts_at: #{race['starts_at']} racer_id: #{racer['id']}, race_id: #{race_id} best_time: #{best_time} average_time: #{average_time}"
                     RacerRace.create!(racer_id: racer['id'], race_id: race_id, race_start: race['starts_at'], nickname: racer['nickname'], best_time: best_time, average_time: average_time, kart_number: racer['kart_number'], kart_type: racer['kart_type'])
                 end
             end

@@ -18,8 +18,10 @@ class Race
     end
 
     def self.load(race_id)
-        race_url = URI("http://sirtigard.clubspeedtiming.com/api/index.php/races/#{race_id}.json?key=cs-dev")
-        race_response = Net::HTTP.get(race_url)
+        race_response = Rails.cache.fetch("race/#{race_id}", expires_in: 7.days) do
+            race_url = URI("http://sirtigard.clubspeedtiming.com/api/index.php/races/#{race_id}.json?key=cs-dev")
+            Net::HTTP.get(race_url)
+        end
         race = JSON.parse(race_response)['race']
     
         race["starts_at"] = Time.zone.parse(race["starts_at"])
