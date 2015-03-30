@@ -23,8 +23,12 @@ class Race
             Net::HTTP.get(race_url)
         end
         race = JSON.parse(race_response)['race']
+        # puts JSON.pretty_generate(race)
     
         race["starts_at"] = Time.zone.parse(race["starts_at"])
+
+        # Sometimes the racers are represented in the form {"0" => {...}, "1" => {...}}
+        race["racers"] = race["racers"].values if race["racers"].values rescue false
 
         race["racers"].each do |racer|
             racer["id"] = racer["id"].to_i
