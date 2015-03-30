@@ -30,3 +30,13 @@
     color: #6B0070;
     font-weight: bold;  
 }
+
+.nickname {
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+.date {
+    white-space: nowrap;   
+}

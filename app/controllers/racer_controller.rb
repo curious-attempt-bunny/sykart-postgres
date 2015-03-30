@@ -16,8 +16,10 @@ class RacerController < ApplicationController
     private
 
     def resolve_racer_by_id(id)
-        racer = RacerRace.find_by(racer_id: id)
+        racer = nil
+        racer = RacerRace.find_by(racer_id: id.to_i) unless id.to_i == 0 && id != "0"
         racer = RacerRace.find_by(nickname: id) if racer.nil?
+
         racer
     end
 end
