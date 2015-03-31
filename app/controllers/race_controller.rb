@@ -19,13 +19,17 @@ class RaceController < ApplicationController
 
         @best_averages = []
         @best_bests = []
-        @racers.each { |racer| racer['times'] = [] }
-        # @best_averages = [normal_karts, fast_karts, kids_karts].map do |karts|
-        #   karts.map { |racers| racers["average"] }.min
-        # end
+        @racers.each do |racer|
+            racer['times'] = RacerRace.where(racer_id: racer['id'], kart_type: racer['kart_type']).order('best_time asc').limit(3).map(&:best_time)
+        end
 
-        # @best_bests = [normal_karts, fast_karts, kids_karts].map do |karts|
-        #   karts.map { |racers| racers["best"] }.min
-        # end
+        karts = @racers.group_by { |racer| racer['kart_type'] }
+        @best_averages = {}
+        @best_bests = {}
+
+        karts.each do |kart, racers|
+            @best_averages[kart] = racers.map { |racer| racer['average_time'] }.min
+            @best_bests[kart] = racers.map { |racer| racer['best_time'] }.min
+        end
     end
 end

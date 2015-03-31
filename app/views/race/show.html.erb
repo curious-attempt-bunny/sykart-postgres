@@ -5,7 +5,7 @@
       <tr>
         <th>#</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname %>"><%= racer["nickname"] %></th>
+          <th class="nickname <%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -18,7 +18,7 @@
             <% laps = racer["laps"] %>
             <% if lap_index < laps.size %>
               <% time = laps[lap_index]["lap_time"] %>
-              <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if time == racer['best'] %>">
+              <td class="<%= "best_#{racer['kart_type']}" if time == racer['best_time'] %>">
                 <span><%= sprintf("%2.3f", time) %></span>
               </td>
             <% else %>
@@ -36,7 +36,7 @@
       <tr>
         <th></th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname"><%= racer["nickname"] %></th>
+          <th class="nickname <%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -44,7 +44,7 @@
       <tr>
         <td></td>
         <% @racers.each_with_index do |racer, i| %>
-          <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if @best_averages.include?(racer["average_time"]) %>"><%= sprintf("%2.3f", racer["average_time"]) %></td>
+          <td class="<%= "best_#{racer['kart_type']}" if @best_averages[racer['kart_type']] == racer["average_time"] %>"><%= sprintf("%2.3f", racer["average_time"]) %></td>
         <% end %>
       </tr>
     </tbody>
@@ -56,7 +56,7 @@
       <tr>
         <th>Rank</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname <%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') %>"><%= racer["nickname"] %></th>
+          <th class="nickname <%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -65,7 +65,7 @@
         <tr>
           <td><%= (index+1).ordinalize %></td>
           <% @racers.each do |racer| %>
-            <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if racer['best'] == racer['times'][index] %>">
+            <td class="<%= "best_#{racer['kart_type']}" if racer['best'] == racer['times'][index] %>">
               <% if index < racer['times'].size %>
                 <%= sprintf("%2.3f", racer['times'][index]) %>
               <% end %>
