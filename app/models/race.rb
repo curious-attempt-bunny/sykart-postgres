@@ -42,9 +42,24 @@ class Race
                 end
             racer["laps"] = racer["laps"] || []
             racer["laps"].reject! { |lap| lap["lap_time"] <= 0 }
+
+            total_time = 0
+            laps = 0
+            best_time = nil
+            racer["laps"].each do |lap|
+                lap_time = lap["lap_time"]
+                best_time = lap_time if best_time.nil? || best_time > lap_time
+                total_time += lap_time
+                laps += 1
+            end
+            if best_time
+                racer['average_time'] = (total_time / laps).round(3)
+                racer['best_time'] = best_time
+            end
         end
 
         race["racers"].reject! { |racer| racer["laps"].empty? }
+        race["racers"].sort_by! { |racer| racer["best_time"] }
 
         race
     end

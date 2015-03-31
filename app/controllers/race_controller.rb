@@ -12,4 +12,20 @@ class RaceController < ApplicationController
             @races << race
         end
     end
+
+    def show
+        @race = Race.load(params[:id].to_i)
+        @racers = @race["racers"]
+
+        @best_averages = []
+        @best_bests = []
+        @racers.each { |racer| racer['times'] = [] }
+        # @best_averages = [normal_karts, fast_karts, kids_karts].map do |karts|
+        #   karts.map { |racers| racers["average"] }.min
+        # end
+
+        # @best_bests = [normal_karts, fast_karts, kids_karts].map do |karts|
+        #   karts.map { |racers| racers["best"] }.min
+        # end
+    end
 end
