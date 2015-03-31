@@ -2,13 +2,22 @@
     <% @races_by_kart_type.each do |type, races| %>
         <h1>Kart type: <%= type %></h1>
         <table class="table table-striped">
-            <% races.each_with_index do |race, i| %>
+            <thead>
                 <tr>
-                    <td><%= i+1 %></td>
-                    <td><%= sprintf("%2.3f", race.best_time) %></td>
-                    <td><a href="/races/<%= race.race_id %>"><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></a></td>
+                    <th>Rank</th>
+                    <th>Best time</th>
+                    <th>Date</th>
                 </tr>
-            <% end %>
+            </thead>
+            <tbody>
+                <% races.each_with_index do |race, i| %>
+                    <tr>
+                        <td><%= i+1 %></td>
+                        <td><%= sprintf("%2.3f", race.best_time) %></td>
+                        <td><a href="/races/<%= race.race_id %>"><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></a></td>
+                    </tr>
+                <% end %>
+            </tbody>
         </table>
     <% end %>
 </ul>
