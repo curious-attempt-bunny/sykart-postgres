@@ -65,7 +65,7 @@
         <tr>
           <td><%= (index+1).ordinalize %></td>
           <% @racers.each do |racer| %>
-            <td class="<%= "best_#{racer['kart_type']}" if racer['best'] == racer['times'][index] %>">
+            <td class="<%= "best_#{racer['kart_type']}" if racer['best_time'] == racer['times'][index] %>">
               <% if index < racer['times'].size %>
                 <%= sprintf("%2.3f", racer['times'][index]) %>
               <% end %>
