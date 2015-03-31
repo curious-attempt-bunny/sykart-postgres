@@ -1,26 +1,11 @@
-<% table_min_width = 28 + ((670-28)/12) * @racers.size %>
-<% table_max_width = 28 + 2.5*((670-28)/12) * @racers.size %>
-
-<% lap_width = 100 * 28 / table_min_width %>
-<% racer_width = (100-lap_width)/@racers.size %>
-
-<div class="container" style="min-width: <%= table_min_width %>px;max-width: <%= table_max_width %>px;">
-
-<div id="race-data" class="table-responsive">
-  <h3><%= @race['starts_at'].strftime("%l:%M%P") %> race</h3>
-  <h4>Lap times</h4>
-  <table class="table table-condensed table-striped" style="min-width: <%= table_min_width %>px;max-width: <%= table_max_width %>px;">
+  <h1>Race at <%= render_date(@race['starts_at']) %></h1>
+  <h2>Lap times</h2>
+  <table class="table table-condensed table-striped" style="table-layout: fixed;">
     <thead>
       <tr>
-        <th style="width: <%= lap_width %>%;">#</th>
+        <th>#</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th style="width: <%= racer_width %>%;" class="nickname <%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') %>">
-            <% if racer["nickname"].ends_with?("GT9") %>
-              <span><%= racer["nickname"][0..-" GT9".length] %></span>
-            <% else %>
-              <span><%= racer["nickname"] %></span>
-            <% end %>
-          </th>
+          <th class="nickname %>"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -45,19 +30,13 @@
     </tbody>
   </table>
 
-  <h4>Average times</h4>
-  <table class="table table-condensed table-striped" style="min-width: <%= table_min_width %>px;max-width: <%= table_max_width %>px;">
+  <h2>Average times</h2>
+  <table class="table table-condensed table-striped" style="table-layout: fixed;">
     <thead>
       <tr>
-        <th style="width: <%= lap_width %>%;"></th>
+        <th></th>
         <% @racers.each_with_index do |racer, i| %>
-          <th style="width: <%= racer_width %>%;" class="nickname <%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') %>">
-            <% if racer["nickname"].ends_with?("GT9") %>
-              <span><%= racer["nickname"][0..-" GT9".length] %></span>
-            <% else %>
-              <span><%= racer["nickname"] %></span>
-            <% end %>
-          </th>
+          <th class="nickname"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -65,27 +44,19 @@
       <tr>
         <td></td>
         <% @racers.each_with_index do |racer, i| %>
-          <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if @best_averages.include?(racer["average_time"]) %>">
-            <span><%= sprintf("%2.3f", racer["average_time"]) %></span>
-          </td>
+          <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if @best_averages.include?(racer["average_time"]) %>"><%= sprintf("%2.3f", racer["average_time"]) %></td>
         <% end %>
       </tr>
     </tbody>
   </table>
 
-  <h4>Personal best times</h4>
-  <table class="table table-condensed table-striped" style="min-width: <%= table_min_width %>px;max-width: <%= table_max_width %>px;">
+  <h2>Personal best times</h2>
+  <table class="table table-condensed table-striped" style="table-layout: fixed;">
     <thead>
       <tr>
-        <th style="width: <%= lap_width %>%;">Rank</th>
+        <th>Rank</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th style="width: <%= racer_width %>%;" class="nickname <%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') %>">
-            <% if racer["nickname"].ends_with?("GT9") %>
-              <span><%= racer["nickname"][0..-" GT9".length] %></span>
-            <% else %>
-              <span><%= racer["nickname"] %></span>
-            <% end %>
-          </th>
+          <th class="nickname <%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') %>"><%= racer["nickname"] %></th>
         <% end %>
       </tr>
     </thead>
@@ -96,7 +67,7 @@
           <% @racers.each do |racer| %>
             <td class="<%= "hp.#{racer["hp"]}.fg".gsub(/\./, '-') if racer['best'] == racer['times'][index] %>">
               <% if index < racer['times'].size %>
-                <span><%= sprintf("%2.3f", racer['times'][index]) %></span>
+                <%= sprintf("%2.3f", racer['times'][index]) %>
               <% end %>
             </td>
           <% end %>
@@ -104,25 +75,4 @@
       <% end %>
     </tbody>
   </table>
-</div>
 
-</div>
-
-<script type="text/javascript">
-  if (window.location.pathname == "/races/latest") {
-    var checkForUpdate = function() {
-      var hours = new Date().getHours()
-      if (hours >= 10 && hours <= 24) {
-        $.get("/races/<%= @race['id'] %>/most_recent", function(data) {
-          if (data != true) {
-            window.location.reload();
-          }
-        }).always(function() {
-          setTimeout(checkForUpdate, 10000);
-        });
-      }
-    }
-
-    setTimeout(checkForUpdate, 5000);
-  }
-</script>
