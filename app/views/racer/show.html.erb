@@ -6,7 +6,7 @@
                 <tr>
                     <td><%= i+1 %></td>
                     <td><%= sprintf("%2.3f", race.best_time) %></td>
-                    <td><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></td>
+                    <td><a href="/races/<%= race.race_id %>"><%= race.race_start.strftime("%l:%M%P %a %b #{race.race_start.day.ordinalize} %Y") %></a></td>
                 </tr>
             <% end %>
         </table>
