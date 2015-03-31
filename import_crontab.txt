@@ -1,0 +1,1 @@
+*/2 * * * * cd /usr/src/app && bundle exec rails runner lib/scripts/import.rb

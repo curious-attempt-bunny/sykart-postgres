@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-Race.unimported.each do |race_id|
+Race.unimported[0...10].each do |race_id|
     race = Race.load(race_id)
 
     ActiveRecord::Base.transaction do
