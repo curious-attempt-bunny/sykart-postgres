@@ -1,7 +1,7 @@
 <% if @races.empty? %>
     <h1>Recent races</h1>
 <% else %>
-    <h1><%= @races.first.first.race_start.strftime("%A") %></h1>
+    <h1><%= @races.first.first.race_start.strftime("%A") %>'s races</h1>
 <% end %>
 
 <table class="table table-striped" style="table-layout: fixed;">
