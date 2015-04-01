@@ -11,9 +11,9 @@
     </thead>
     <tbody>
       <% max_laps = @racers.map { |racer| racer['laps'].size }.max %>
-      <% (1...max_laps).each do |lap_index| %>
+      <% (0...max_laps).each do |lap_index| %>
         <tr>
-          <td><%= lap_index %></td>
+          <td><%= lap_index+1 %></td>
           <% @racers.each_with_index do |racer, i| %>
             <% laps = racer["laps"] %>
             <% if lap_index < laps.size %>
