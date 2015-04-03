@@ -1,0 +1,34 @@
+<h1>Number of qualifying best times in the last week</h1>
+<p>This assumes that all drivers weigh 150-200 lbs, and includes drivers that have already qualified for fast karts.</p>
+<table>
+    <tr>
+        <th></th>
+        <% (11..22).each do |hour| %>
+            <th style="width: 60px; text-align: center;"><%= sprintf("%2d:00", hour) %></th>
+        <% end %>
+    </tr>
+    <% ((1..6).to_a + [0]).each do |day| %>
+        <% @day_hour_racers[day] ||= {} %>
+        <tr>
+            <th style="vertical-align: middle;"><%= Time::RFC2822_DAY_NAME[day] %></th>
+            <% (11..22).each do |hour| %>
+                <% size = 2*[(@day_hour_racers[day][hour] || 0), 6].min * 5 %>
+                <% pad = (12 * 5 - size)/2 %>
+                <% caption = if @day_hour_racers[day][hour]
+                                "#{@day_hour_racers[day][hour]} qualifying time#{'s' if @day_hour_racers[day][hour] > 1}"
+                            else
+                                "No qualifying times"
+                            end %>
+
+                <td class="circle-container" title="<%= caption %>"><div class="circle" style="width: <%= size %>px; height: <%= size %>px; margin: <%= pad %>px;">&nbsp;</div></td>
+            <% end %>
+            <th style="vertical-align: middle;"><%= Time::RFC2822_DAY_NAME[day] %></th>
+        </tr>
+    <% end %>
+    <tr>
+        <th></th>
+        <% (11..22).each do |hour| %>
+            <th style="width: 60px; text-align: center;"><%= sprintf("%2d:00", hour) %></th>
+        <% end %>
+    </tr>
+</table>
