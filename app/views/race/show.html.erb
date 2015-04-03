@@ -5,7 +5,7 @@
       <tr>
         <th>#</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
+          <th class="nickname" title="<%= racer['nickname'] %>"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
         <% end %>
       </tr>
     </thead>
@@ -36,7 +36,7 @@
       <tr>
         <th></th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
+          <th class="nickname" title="<%= racer['nickname'] %>"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
         <% end %>
       </tr>
     </thead>
@@ -56,7 +56,7 @@
       <tr>
         <th>Rank</th>
         <% @racers.each_with_index do |racer, i| %>
-          <th class="nickname"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
+          <th class="nickname" title="<%= racer['nickname'] %>"><a href="/racers/<%= racer['id'] %>" class="<%= "best_#{racer['kart_type']}" %>"><%= racer["nickname"] %></a></th>
         <% end %>
       </tr>
     </thead>

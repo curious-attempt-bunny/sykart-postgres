@@ -20,7 +20,7 @@
             <tr>
                 <td class="date"><a href="/races/<%= race.first.race_id %>"><%= race.first.race_start.strftime("%l:%M%P") %></a></td>
                 <% race.each do |racer| %>
-                    <td class="nickname"><%= link_to racer['nickname'], "/racers/#{racer['racer_id']}", class: "racer-link best_#{racer['kart_type']}", style: "font-weight: normal;" %></td>
+                    <td class="nickname" title="<%= racer['nickname'] %>"><%= link_to racer['nickname'], "/racers/#{racer['racer_id']}", class: "racer-link best_#{racer['kart_type']}", style: "font-weight: normal;" %></td>
                 <% end %>
                 <% (max_racers - race.size).times do %>
                     <td class="nickname">&nbsp;</td>
