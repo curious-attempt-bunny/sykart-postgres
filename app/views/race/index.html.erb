@@ -20,7 +20,7 @@
             <tr>
                 <td class="date"><a href="/races/<%= race.first.race_id %>"><%= race.first.race_start.strftime("%l:%M%P") %></a></td>
                 <% race.each do |racer| %>
-                    <td class="nickname" title="<%= racer['nickname'] %>"><%= link_to racer['nickname'], "/racers/#{racer['racer_id']}", class: "racer-link best_#{racer['kart_type']}", style: "font-weight: normal;" %></td>
+                    <td class="nickname" title="<%= racer['nickname'] %>" data-racer="<%= racer['racer_id'] %>"><%= link_to racer['nickname'], "/racers/#{racer['racer_id']}", class: "racer-link best_#{racer['kart_type']}", style: "font-weight: normal;" %></td>
                 <% end %>
                 <% (max_racers - race.size).times do %>
                     <td class="nickname">&nbsp;</td>
@@ -29,3 +29,19 @@
         <% end %>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.nickname').mouseleave(function(e) {
+            $('.nickname a').attr("style", "font-weight: normal;");
+        });
+        $('.nickname').mouseenter(function(e) {
+            var id = $(e.target).data('racer');
+
+            if (id) {
+                $('.nickname a').attr("style", "font-weight: normal;");
+                $('.nickname[data-racer="'+id+'"] a').attr("style", "font-weight: bold;");
+            }
+        });
+    });
+</script>
