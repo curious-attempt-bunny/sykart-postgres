@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   get '/races' => 'race#index'
   get '/races/:id' => 'race#show'
   get '/karts' => 'kart#index'
-  
+  get '/hours/races' => 'hour#races'
+
 end

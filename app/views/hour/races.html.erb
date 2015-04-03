@@ -1,0 +1,32 @@
+<h1>Average race group sizes in the last week</h1>
+<table>
+    <tr>
+        <th></th>
+        <% (11..22).each do |hour| %>
+            <th style="width: 5em; text-align: center;"><%= sprintf("%2d:00", hour) %></th>
+        <% end %>
+    </tr>
+    <% ((1..6).to_a + [0]).each do |day| %>
+        <tr>
+            <th style="vertical-align: middle;"><%= Time::RFC2822_DAY_NAME[day] %></th>
+            <% (11..22).each do |hour| %>
+                <% size = (@day_hour_racers[day][hour] || 0) * 5 %>
+                <% pad = (12 * 5 - size)/2 %>
+                <% caption = if @day_hour_racers[day][hour]
+                                "#{@day_hour_racers[day][hour]} to a group on average"
+                            else
+                                "No races"
+                            end %>
+
+                <td class="circle-container" title="<%= caption %>"><div class="circle" style="width: <%= size %>px; height: <%= size %>px; margin: <%= pad %>px;">&nbsp;</div></td>
+            <% end %>
+            <th style="vertical-align: middle;"><%= Time::RFC2822_DAY_NAME[day] %></th>
+        </tr>
+    <% end %>
+    <tr>
+        <th></th>
+        <% (11..22).each do |hour| %>
+            <th style="width: 5em; text-align: center;"><%= sprintf("%2d:00", hour) %></th>
+        <% end %>
+    </tr>
+</table>
