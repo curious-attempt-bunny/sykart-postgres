@@ -1,0 +1,22 @@
+<h1>Best performing normal karts</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:right;">Kart number</th>
+            <th style="text-align:center;">Average of 10 best race times for the past 14 days</th>
+            <th style="text-align:center;">Gap to the best performing kart</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% best = nil %>
+        <% @karts.sort_by { |kart_number, time| time }.each do |kart_number, time| %>
+            <tr>
+                <td style="text-align:right;"><%= kart_number %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", time) %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", time-best) if best %></td>
+                <% best = time unless best %>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
