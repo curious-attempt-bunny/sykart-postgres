@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/races' => 'race#index'
   get '/races/:id' => 'race#show'
   get '/karts' => 'kart#index'
+  get '/karts2' => 'kart#index2'
   get '/hours/races' => 'hour#races'
   get '/hours/qualifiers' => 'hour#qualifiers'
 

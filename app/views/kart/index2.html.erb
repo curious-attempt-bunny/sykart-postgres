@@ -1,0 +1,38 @@
+<h1>Best performing normal karts (method 2)</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:right;">Kart number</th>
+            <th style="text-align:center;">Gap to the best performing kart</th>
+            <th style="text-align:center;">Comparison driver</th>
+            <th style="text-align:center;">Best time in this kart</th>
+            <th style="text-align:center;">In other karts</th>
+            <th style="text-align:center;">Gap to the other karts</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% best = nil %>
+        <% @karts.sort_by { |kart_number, time| time }.each do |kart_number, time| %>
+            <% @based_on_races[kart_number].each_with_index do |detail, i| %>
+                <tr>
+                    <% if i == 0 %>
+                        <td style="text-align:right;" rowspan="<%= @based_on_races[kart_number].size + 1%>"><%= kart_number %></td>
+                        <td style="text-align:center;" rowspan="<%= @based_on_races[kart_number].size + 1%>"><%= sprintf("%2.3f", time-best) if best %></td>
+                    <% end %>
+                    <td style="text-align:center;"><%= detail[:nickname] %></td>
+                    <td style="text-align:center;"><%= sprintf("%2.3f", detail[:best_time]) %></td>
+                    <td style="text-align:center;"><%= sprintf("%2.3f", detail[:comparison]) %></td>
+                    <td style="text-align:center;"><%= sprintf("%2.3f", detail[:best_time] - detail[:comparison]) %></td>
+                </tr>
+            <% end %>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">Average</td>
+                <td style="text-align:center;font-weight:bold;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:best_time] }.sum / @based_on_races[kart_number].size ) %></td>
+                <td style="text-align:center;font-weight:bold;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:comparison] }.sum / @based_on_races[kart_number].size ) %></td>
+                <td style="text-align:center;font-weight:bold;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:best_time] - detail[:comparison]}.sum / @based_on_races[kart_number].size ) %></td>
+
+            <% best = time unless best %>
+        <% end %>
+    </tbody>
+</table>
+
