@@ -1,4 +1,32 @@
 <h1>Best performing normal karts (method 2)</h1>
+<p>Based on times for the last 14 days. Times in other karts are limited to the best 10 race times, and then the average is taken. Drivers with less than 3 comparison times from other karts are excluded. 
+<h2>Summary</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:right;">Kart number</th>
+            <th style="text-align:center;">Gap to the best performing kart</th>
+            <th style="text-align:center;">Best time in this kart</th>
+            <th style="text-align:center;">In other karts</th>
+            <th style="text-align:center;">Gap to the other karts</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% best = nil %>
+        <% @karts.sort_by { |kart_number, time| time }.each do |kart_number, time| %>
+            <tr>
+                <td style="text-align:right;"><%= kart_number %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", time-best) if best %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:best_time] }.sum / @based_on_races[kart_number].size ) %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:comparison] }.sum / @based_on_races[kart_number].size ) %></td>
+                <td style="text-align:center;"><%= sprintf("%2.3f", @based_on_races[kart_number].map { |detail| detail[:best_time] - detail[:comparison]}.sum / @based_on_races[kart_number].size ) %></td>
+
+            <% best = time unless best %>
+        <% end %>
+    </tbody>
+</table>
+
+<h2>Detail</h2>
 <table class="table table-striped">
     <thead>
         <tr>
