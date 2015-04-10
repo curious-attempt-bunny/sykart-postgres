@@ -2,7 +2,9 @@ class RacerController < ApplicationController
     def show
         @racer = resolve_racer_by_id(params[:id])
 
-        @races_by_kart_type = RacerRace.where(racer_id: @racer.racer_id).order('kart_type, best_time asc').all.group_by(&:kart_type)
+        @races_by_kart_type = RacerRace.where(racer_id: @racer.racer_id).order('kart_type, best_time asc').group_by(&:kart_type)
+
+        @coracers = RacerRace.where(race_id: RacerRace.where(racer_id: @racer.racer_id).pluck(:race_id)).where('racer_id <> ?', @racer.racer_id).group_by(&:racer_id)
     end
 
     def versus
@@ -11,6 +13,8 @@ class RacerController < ApplicationController
 
         @races = RacerRace.where(racer_id: [@racer1.racer_id, @racer2.racer_id]).group_by(&:race_id)
         @races.reject! { |k, racers| racers.size < 2 || racers.first.kart_type != racers.second.kart_type }
+
+        @coracers = RacerRace.where(race_id: RacerRace.where(racer_id: @racer1.racer_id).pluck(:race_id)).where('racer_id <> ?', @racer1.racer_id).where('racer_id <> ?', @racer2.racer_id).group_by(&:racer_id)
     end
 
     private

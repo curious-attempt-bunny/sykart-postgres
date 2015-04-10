@@ -1,4 +1,31 @@
-<h1><%= @racer1.nickname %> vs <%= @racer2.nickname %></h1>
+<h1><%= @racer1.nickname %> vs <a href="/racers/<%= @racer2.racer_id %>"><%= @racer2.nickname %></a>
+    <div class="dropdown" style="float:right;">
+      <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        Compare with
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= "/racers/#{@racer1.racer_id}" %>">No-one</a></li>
+        <li role="presentation" class="divider"></li>
+        <% previous_size = 10000 %>
+        <% @coracers.sort { |a,b| a[1].size == b[1].size ? a[1].first.nickname.downcase <=> b[1].first.nickname.downcase : b[1].size <=> a[1].size }.each do |key, races| %>
+            <% [1,5,10,20,50,100,200,500,1000,2000,5000,10000].each do |threshold| %>
+                <% if races.size <= threshold && previous_size > threshold %>
+                    <li role="presentation" class="dropdown-header">
+                        <% if threshold == 1 %>
+                            1 race together
+                        <% else %>
+                            <%= threshold %> or less races together</li>
+                        <% end %>
+                    <% break %>
+                <% end %>
+            <% end %>
+            <% previous_size = races.size %>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= "/racers/#{@racer1.racer_id}/vs/#{races.first.racer_id}" %>"><%= races.first.nickname %></a></li>
+        <% end %>
+      </ul>
+    </div>
+</h1>
 
 <h2>Best times</h2>
 
