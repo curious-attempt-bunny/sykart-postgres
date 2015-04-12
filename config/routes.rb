@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/', to: redirect('/races')
+  get '/' => 'race#index'
 
   get '/racers/:id' => 'racer#show'
   get '/racers/:id1/vs/:id2' => 'racer#versus'
