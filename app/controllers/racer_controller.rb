@@ -17,6 +17,19 @@ class RacerController < ApplicationController
         @coracers = RacerRace.where(race_id: RacerRace.where(racer_id: @racer1.racer_id).pluck(:race_id)).where('racer_id <> ?', @racer1.racer_id).where('racer_id <> ?', @racer2.racer_id).group_by(&:racer_id)
     end
 
+    def search
+        query_args = params[:q].downcase.gsub(/[^a-z0-9]/, '%').split(/ /)
+
+        racers = RacerRace.select('distinct(racer_id)')
+        query_args.each do |query_arg|
+            racers = racers.where('nickname ilike ?', "%#{query_arg}%")
+        end
+
+        racers_id = racers.limit(20).pluck(:racer_id)
+
+        @racers = RacerRace.where(racer_id: racers_id).select('racer_id, nickname').group('racer_id, nickname').order('max(race_start) desc')
+    end
+
     private
 
     def resolve_racer_by_id(id)

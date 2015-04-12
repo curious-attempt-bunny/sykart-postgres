@@ -1,0 +1,5 @@
+<ul>
+    <% @racers.each do |racer| %>
+        <li><a href="/racers/<%= racer.racer_id %>"><%= racer.nickname %></a></li>
+    <% end %>
+</ul>

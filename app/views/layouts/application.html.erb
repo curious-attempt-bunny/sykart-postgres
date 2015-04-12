@@ -28,6 +28,14 @@
         </button>
         <a class="navbar-brand" href="/">Sykart Data</a>
       </div>
+      <form class="navbar-form navbar-left" role="search" action="/racers/search">
+        <div class="form-group input-group">
+          <input name="q" type="text" class="form-control" placeholder="Find racer..." value="<% params[:q] %>">
+          <span class="input-group-btn">
+            <button type="submit button" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></button>
+          </span>
+        </div>
+      </form>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/races">Latest races</a></li>
