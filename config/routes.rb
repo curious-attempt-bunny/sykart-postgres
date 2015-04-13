@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get '/' => 'race#index'
+  get '/landing' => 'welcome#index'
 
   get '/racers/:id' => 'racer#show'
   get '/racers/:id1/vs/:id2' => 'racer#versus'
