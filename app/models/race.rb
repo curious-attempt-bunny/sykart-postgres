@@ -42,6 +42,7 @@ class Race
                 end
             racer["laps"] = racer["laps"] || []
             racer["laps"].reject! { |lap| lap["lap_time"] <= 0 }
+            racer["nickname"] = racer["nickname"][0..39] # Max length is 40
 
             total_time = 0
             laps = 0
