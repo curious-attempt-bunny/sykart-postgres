@@ -22,7 +22,16 @@ class Race
             race_url = URI("http://sirtigard.clubspeedtiming.com/api/index.php/races/#{race_id}.json?key=cs-dev")
             Net::HTTP.get(race_url)
         end
-        race = JSON.parse(race_response)['race']
+
+        # puts race_response
+
+        response = JSON.parse(race_response)
+        if response['error'].present? 
+            puts response['error']['message']
+            return nil 
+        end
+        race = response['race']
+
         # puts JSON.pretty_generate(race)
     
         race["starts_at"] = Time.zone.parse(race["starts_at"])
@@ -42,6 +51,7 @@ class Race
                 end
             racer["laps"] = racer["laps"] || []
             racer["laps"].reject! { |lap| lap["lap_time"] <= 0 }
+            racer["nickname"] ||= 'unknown'
             racer["nickname"] = racer["nickname"][0..39] # Max length is 40
 
             total_time = 0
